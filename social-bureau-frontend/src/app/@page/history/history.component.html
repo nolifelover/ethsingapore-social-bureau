@@ -1,0 +1,63 @@
+<section class="page-wrapper">
+  <div class="container">
+    <div class="full-center-container" *ngIf="error; else app_allow">
+      <app-error />
+    </div>
+
+    <ng-template #app_allow>
+      <div class="full-center-container" *ngIf="fetching; else content">
+        <app-spinner />
+      </div>
+
+      <ng-template #content>
+        <div class="page-padding-top page-padding-bottom">
+          <h3>History</h3>
+          <div class="card">
+            <div class="card-body">
+              <div class="row"></div>
+
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Message</th>
+                    <th>Power</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr *ngFor="let result of historyResults">
+                    <th>
+                      {{
+                        moment(result.createdAt._seconds * 1000).format(
+                          "YYYY-MM-DD"
+                        )
+                      }}
+                    </th>
+                    <td>{{ result.type }}</td>
+                    <td>{{ result.message }}</td>
+                    <td>{{ result.power }}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div
+                class="d-flex justify-content-center mt-3"
+                *ngIf="showLoadMoreButton"
+              >
+                <button
+                  class="btn btn-sm btn-primary w-sm-auto"
+                  [disabled]="loadingMore"
+                  (click)="loadMoreHistory()"
+                >
+                  Load more
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ng-template>
+  </div>
+</section>

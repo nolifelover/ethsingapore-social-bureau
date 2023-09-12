@@ -1,0 +1,243 @@
+<section class="page-wrapper page-padding-top page-padding-bottom">
+  <div class="container">
+    <div class="full-center-container" *ngIf="error; else app_allow">
+      <app-error />
+    </div>
+
+    <ng-template #app_allow>
+      <div class="full-center-container" *ngIf="fetching; else content">
+        <app-spinner />
+      </div>
+
+      <ng-template #content>
+        <div class="row py-3">
+          <div class="col-2"></div>
+          <div class="col">
+            <div class="card">
+              <div class="card-header bg-transparent">
+                <div class="card-header-container">
+                  <img
+                    [src]="
+                      !!report.createdBy.profileImage
+                        ? (report.createdBy.profileImage | imageUri)
+                        : defaultAvatar
+                    "
+                    class="card-img-top"
+                    alt="..."
+                  />
+                  <div class="ps-2 pt-1">
+                    <p>
+                      {{ report.createdBy.firstname }}
+                      {{ report.createdBy.lastname }}
+                    </p>
+                    <small>{{ fromNow(report.createdAt._seconds) }}</small>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <h4>{{ report.title }}</h4>
+                <p>{{ report.description }}</p>
+
+                <div class="evidence-image-container">
+                  <div
+                    *ngFor="let imageUri of report.evidences"
+                    class="evidence-image"
+                    [ngStyle]="{
+                      'background-image': 'url(' + (imageUri | imageUri) + ')'
+                    }"
+                  ></div>
+                </div>
+
+                <div class="tag-container mt-3">
+                  <div class="tag bg-dark text-white" *ngIf="!!report.scamType">
+                    {{ report.scamType }}
+                  </div>
+                  <div class="tag bg-dark text-white">
+                    {{ report.category }}
+                  </div>
+                  <div class="tag bg-dark text-white">
+                    {{ report.subcategory }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card mt-3">
+              <div class="card-body">
+                <h5>Scammer information</h5>
+                <hr class="mb-3" />
+                <div class="row mb-2">
+                  <div class="col"><b>Firstname - Lastname</b></div>
+                  <div class="col">{{ report.name }}</div>
+                </div>
+                <div class="row mb-2">
+                  <div class="col-6"><b>Telephone number</b></div>
+                  <div class="col-6">{{ report.mobilePhone }}</div>
+                </div>
+                <div class="row mb-2">
+                  <div class="col-6"><b>National identification number</b></div>
+                  <div class="col-6">{{ report.cId }}</div>
+                </div>
+                <div class="row mb-2">
+                  <div class="col-6"><b>Found products and servies on</b></div>
+                  <div class="col-6">{{ report.foundOn }}</div>
+                </div>
+
+                <h5 class="mt-4">Transaction Detail</h5>
+                <hr class="mb-3" />
+                <div class="row mb-2">
+                  <div class="col-6"><b>Transcation Date</b></div>
+                  <div class="col-6">{{ report.transcationDate }}</div>
+                </div>
+                <div class="row mb-2">
+                  <div class="col-6"><b>Payment channel</b></div>
+                  <div class="col-6">{{ report.paymentChannel }}</div>
+                </div>
+
+                <ng-container [ngSwitch]="report.paymentChannel">
+                  <ng-container *ngSwitchCase="'Bank Transfer'">
+                    <div class="row mb-2">
+                      <div class="col-6"><b>Bank</b></div>
+                      <div class="col-6">
+                        {{ report.paymentDetail.bank }}
+                      </div>
+                    </div>
+                  </ng-container>
+
+                  <ng-container *ngSwitchCase="'Credit Card'">
+                    <div class="row mb-2">
+                      <div class="col-6"><b>Credit card network</b></div>
+                      <div class="col-6">
+                        {{ report.paymentDetail.network }}
+                      </div>
+                    </div>
+                    <div class="row mb-2">
+                      <div class="col-6"><b>Credit Card Issuers</b></div>
+                      <div class="col-6">
+                        {{ report.paymentDetail.issuers }}
+                      </div>
+                    </div>
+                    <div class="row mb-2">
+                      <div class="col-6"><b>Credit card number</b></div>
+                      <div class="col-6">
+                        {{ report.paymentDetail.number }}
+                      </div>
+                    </div>
+                  </ng-container>
+
+                  <ng-container *ngSwitchCase="'Electronic Payment'">
+                    <div class="row mb-2">
+                      <div class="col-6"><b>Electronic Payment</b></div>
+                      <div class="col-6">
+                        {{ report.paymentDetail.payment }}
+                      </div>
+                    </div>
+                  </ng-container>
+
+                  <ng-container *ngSwitchCase="'Cryptocurrency'">
+                    <div class="row mb-2">
+                      <div class="col-6"><b>Wallet name</b></div>
+                      <div class="col-6">
+                        {{ report.paymentDetail.walletName }}
+                      </div>
+                    </div>
+                    <div class="row mb-2">
+                      <div class="col-6"><b>Wallet Address</b></div>
+                      <div class="col-6">
+                        {{ report.paymentDetail.walletAddress }}
+                      </div>
+                    </div>
+                  </ng-container>
+
+                  <ng-container *ngSwitchCase="'Others'">
+                    <div class="row mb-2">
+                      <div class="col-6"><b>Specify payment channel</b></div>
+                      <div class="col-6">
+                        {{ report.paymentDetail.channel }}
+                      </div>
+                    </div>
+                  </ng-container>
+                </ng-container>
+
+                <div class="row mb-2">
+                  <div class="col"><b>Amount of money</b></div>
+                  <div class="col">
+                    {{ report.amountOfMoney }} {{ report.currency }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="action-container mt-3">
+              <div
+                class="action-button background-white"
+                [class.voted]="upOrDownVote === 'UP'"
+              >
+                <button
+                  [disabled]="disabledVote"
+                  class="arrow-button"
+                  (click)="voteCrimeReport('UPVOTE')"
+                >
+                  <i
+                    class="bi bi-arrow-up"
+                    [class.voted]="upOrDownVote === 'UP'"
+                  ></i>
+                </button>
+                <span>{{ report.upvote }}</span>
+              </div>
+
+              <div
+                class="action-button background-white"
+                [class.voted]="upOrDownVote === 'DOWN'"
+              >
+                <button
+                  [disabled]="disabledVote"
+                  class="arrow-button"
+                  (click)="voteCrimeReport('DOWNVOTE')"
+                >
+                  <i
+                    class="bi bi-arrow-down"
+                    [class.voted]="upOrDownVote === 'DOWN'"
+                  ></i>
+                </button>
+                <span>{{ report.downvote }}</span>
+              </div>
+            </div>
+
+            <div class="card mt-3">
+              <div class="card-body comment-container">
+                <div class="d-flex justify-content-center my-1">
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary"
+                    (click)="openCreateCommentModal()"
+                  >
+                    Add a Comment
+                  </button>
+                </div>
+
+                <div
+                  *ngIf="
+                    !report?.comments || !report.comments.length;
+                    else comment_content
+                  "
+                  class="d-flex justify-content-center py-5"
+                >
+                  <p class="m-0">There are currently no comments.</p>
+                </div>
+
+                <ng-template #comment_content>
+                  <app-report-comment
+                    *ngFor="let comment of report.comments"
+                    [comment]="comment"
+                  />
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div class="col-2"></div>
+        </div>
+      </ng-template>
+    </ng-template>
+  </div>
+</section>

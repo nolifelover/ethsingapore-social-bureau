@@ -1,0 +1,194 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+@import "src/assets/scss/_variables.scss";
+
+.form-input-group {
+  margin-bottom: 1.5rem;
+  &:last-child {
+    margin-bottom: 2.5rem;
+  }
+  input {
+    background-color: #ffffff !important;
+  }
+
+  textarea {
+    background-color: #ffffff !important;
+  }
+}
+
+.chip-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  .chip {
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .active {
+    background-color: #3f51b5;
+    color: #ffffff;
+  }
+}
+
+.evidence-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  .evidence-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 10px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    position: relative;
+  }
+
+  .remove-icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    color: #000000;
+    font-size: 25px;
+  }
+}
+
+.custom-select {
+  width: 100%;
+  height: 45px;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #454056;
+  border-radius: 0.5rem;
+  border: 1px solid #d5d2dc;
+
+  .invalid {
+    border: 1px solid #f23c49;
+  }
+}
+
+.card {
+  background-color: #ffffff;
+
+  .card-header-container {
+    display: flex;
+    width: 100%;
+
+    .card-img-top {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    p {
+      margin: 0;
+      line-height: 1;
+    }
+  }
+
+  .tag-container {
+    display: flex;
+    gap: 10px;
+
+    .tag {
+      padding: 3px 8px;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      font-size: 14px;
+    }
+  }
+}
+
+.action-container {
+  display: flex;
+  gap: 15px;
+
+  .action-button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border-radius: 20px;
+    padding-right: 15px;
+    background-color: #f5f5f5;
+
+    .arrow-button {
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      border: unset;
+      background-color: #ffffff;
+    }
+
+    .arrow-button-sm {
+      width: 28px;
+      height: 28px;
+      font-size: 14px;
+    }
+
+    .text-sm {
+      font-size: 14px;
+    }
+
+    .arrow-button:hover {
+      color: $primary;
+      background-color: #f1f1f1;
+    }
+  }
+
+  .comment-action-button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border-radius: 20px;
+    padding-right: 15px;
+    background-color: #f5f5f5;
+    cursor: pointer;
+
+    .arrow-button {
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  .comment-action-button:hover {
+    color: $primary;
+    background-color: #f1f1f1;
+  }
+}
+
+.background-white {
+  background-color: #ffffff !important;
+}
+
+.full-center-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.voted {
+  font-weight: bold;
+  color: $primary;
+}
+
+.pointer {
+  cursor: pointer;
+}

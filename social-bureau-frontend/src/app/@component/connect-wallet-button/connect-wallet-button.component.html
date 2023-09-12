@@ -1,0 +1,79 @@
+<ng-container *ngIf="!loading">
+  <a
+    class="btn btn-primary btn-sm rounded-pill ms-2"
+    *ngIf="!account"
+    (click)="connectWallet()"
+  >
+    Connect Wallet
+  </a>
+
+  <div ngbDropdown class="d-inline-block">
+    <button
+      *ngIf="account"
+      class="btn btn-outline-primary btn-sm rounded-pill ms-2"
+      ngbDropdownToggle
+    >
+      {{ account | hideAddress }}
+    </button>
+    <div ngbDropdownMenu>
+      <div class="card">
+        <div *ngIf="!!authService?.user">
+          <img
+            [src]="
+              !!authService?.user?.profileImage
+                ? (authService?.user?.profileImage | imageUri)
+                : defaultAvatar
+            "
+            class="card-img-top"
+            alt="..."
+          />
+          <div class="card-body">
+            <h6>
+              {{ authService?.user?.firstname }}
+              {{ authService?.user?.lastname }}
+            </h6>
+            <p>
+              {{ authService?.user?.publicAddress }}
+            </p>
+            <h6>{{ authService?.user?.role }}</h6>
+
+            <hr />
+          </div>
+          <div class="text-start">
+            <button ngbDropdownItem >Point : {{ userPoints }}</button>
+            <button ngbDropdownItem routerLink="/your-profile">Profile</button>
+            <button ngbDropdownItem routerLink="history">Point History</button>
+
+            <hr class="my-2" />
+            <button ngbDropdownItem (click)="disconnect(disconnectModal)">
+              Sign out
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #disconnectModal role="document" let-modal>
+  <div class="modal-body">
+    <p class="mt-4 ml-1">Do you want to disconnect ?</p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary btn-sm"
+      data-bs-dismiss="modal"
+      (click)="modal.close('close')"
+    >
+      Cancel
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary btn-sm"
+      (click)="modal.close('disconnect')"
+    >
+      Yes, Disconnect
+    </button>
+  </div>
+</ng-template>

@@ -1,0 +1,464 @@
+<section class="page-wrapper page-padding-top page-padding-bottom">
+  <div class="container">
+    <h3>Report the Criminal</h3>
+
+    <form [formGroup]="reportForm" (ngSubmit)="handleSubmit()">
+      <div class="card">
+        <div class="card-header">Scammer information</div>
+        <div class="py-3 px-3">
+          <div class="form-input-group">
+            <label class="form-label">Title</label>
+            <input
+              formControlName="title"
+              placeholder="Title"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid': formService.isControlInvalid(reportForm, 'title')
+              }"
+            />
+            <small
+              *ngIf="formService.controlHasRequiredError(reportForm, 'title')"
+              class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+            >
+              Required
+            </small>
+          </div>
+
+          <div class="form-input-group">
+            <label class="form-label">Description</label>
+            <textarea
+              class="form-control"
+              rows="4"
+              placeholder="Description"
+              formControlName="description"
+              [ngClass]="{
+                'is-invalid': formService.isControlInvalid(
+                  reportForm,
+                  'description'
+                )
+              }"
+            ></textarea>
+            <small
+              *ngIf="
+                formService.controlHasRequiredError(reportForm, 'description')
+              "
+              class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+            >
+              Required
+            </small>
+          </div>
+
+          <div class="form-input-group">
+            <label class="form-label">Firstname - Lastname</label>
+            <input
+              formControlName="name"
+              placeholder="Enter firstname and lastname without prefix such as John Wick, Paul Vincent"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid': formService.isControlInvalid(reportForm, 'name')
+              }"
+            />
+            <small
+              *ngIf="formService.controlHasRequiredError(reportForm, 'name')"
+              class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+            >
+              Required
+            </small>
+          </div>
+
+          <div class="form-input-group">
+            <label class="form-label">Telephone number</label>
+            <input
+              formControlName="mobilePhone"
+              placeholder="Telephone number"
+              class="form-control"
+              [inputMask]="mobilePhoneMask"
+              [ngClass]="{
+                'is-invalid': formService.isControlInvalid(
+                  reportForm,
+                  'mobilePhone'
+                )
+              }"
+            />
+            <small
+              *ngIf="
+                formService.controlHasRequiredError(reportForm, 'mobilePhone')
+              "
+              class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+            >
+              Required
+            </small>
+            <small
+              *ngIf="formService.getControl(reportForm, 'mobilePhone')?.errors?.['inputMask']"
+              class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+            >
+              The telephone number format is incorrect.
+            </small>
+          </div>
+
+          <div class="form-input-group">
+            <label class="form-label">National identification number</label>
+            <input
+              formControlName="cId"
+              placeholder="National identification number"
+              class="form-control"
+              [inputMask]="cIdPhoneMask"
+              [ngClass]="{
+                'is-invalid': formService.isControlInvalid(reportForm, 'cId')
+              }"
+            />
+            <small
+              *ngIf="formService.controlHasRequiredError(reportForm, 'cId')"
+              class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+            >
+              Required
+            </small>
+            <small
+              *ngIf="formService.getControl(reportForm, 'cId')?.errors?.['inputMask']"
+              class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+            >
+              The National identification number format is incorrect.
+            </small>
+          </div>
+
+          <div class="form-input-group">
+            <label class="form-label">Scam type</label>
+            <div class="chip-container">
+              <div
+                class="chip"
+                *ngFor="let type of scamTypeOptions"
+                (click)="onSelectScamType(type)"
+                [class.active]="
+                  type === formService.getControl(reportForm, 'scamType')?.value
+                "
+              >
+                {{ type }}
+              </div>
+            </div>
+            <small
+              *ngIf="
+                formService.controlHasRequiredError(reportForm, 'scamType')
+              "
+              class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+            >
+              Required
+            </small>
+          </div>
+
+          <div class="form-input-group">
+            <label class="form-label">Category</label>
+            <div class="chip-container">
+              <div
+                class="chip"
+                *ngFor="let cate of categoryOptions"
+                (click)="onSelectCategory(cate)"
+                [ngClass]="{
+                  active:
+                    formService.getControl(reportForm, 'category')?.value ===
+                    cate.title
+                }"
+              >
+                {{ cate.title }}
+              </div>
+            </div>
+            <small
+              *ngIf="
+                formService.controlHasRequiredError(reportForm, 'category')
+              "
+              class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+            >
+              Required
+            </small>
+          </div>
+
+          <div
+            class="form-input-group"
+            *ngIf="!!formService.getControl(reportForm, 'category')?.value"
+          >
+            <label class="form-label">Subcategory</label>
+            <div
+              class="chip-container"
+              *ngIf="!!subcategoryOptions.length; else subcategory_input"
+            >
+              <div
+                class="chip"
+                *ngFor="let cate of subcategoryOptions"
+                (click)="onSelectSubcategory(cate)"
+                [ngClass]="{
+                  active:
+                    formService.getControl(reportForm, 'subcategory')?.value ===
+                    cate
+                }"
+              >
+                {{ cate }}
+              </div>
+            </div>
+
+            <ng-template #subcategory_input>
+              <input
+                formControlName="subcategory"
+                placeholder="Subcategory"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid': formService.isControlInvalid(
+                    reportForm,
+                    'subcategory'
+                  )
+                }"
+              />
+            </ng-template>
+
+            <small
+              *ngIf="
+                formService.controlHasRequiredError(reportForm, 'subcategory')
+              "
+              class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+            >
+              Required
+            </small>
+          </div>
+
+          <div class="form-input-group">
+            <label class="form-label">Found products and servies on</label>
+            <input
+              formControlName="foundOn"
+              placeholder="URL link to products or services such as http://www.sampleshop.com/example/22222"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid': formService.isControlInvalid(
+                  reportForm,
+                  'foundOn'
+                )
+              }"
+            />
+            <small
+              *ngIf="formService.controlHasRequiredError(reportForm, 'foundOn')"
+              class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+            >
+              Required
+            </small>
+          </div>
+
+          <div class="form-input-group">
+            <label class="form-label">Evidences</label>
+            <p>
+              You can upload your image of evidencd with JPG, JPEG, and PNG file
+              only. File size should not be more than 5MB.
+            </p>
+            <input
+              class="form-control"
+              type="file"
+              multiple
+              accept="image/png, image/jpeg"
+              (change)="onInputEvidenceImages($event)"
+              #evidenceInput
+            />
+          </div>
+
+          <div
+            class="evidence-container"
+            *ngIf="
+              !!formService.getControl(reportForm, 'evidences')?.value.length
+            "
+          >
+            <div
+              *ngFor="
+                let imageUri of formService.getControl(reportForm, 'evidences')
+                  ?.value
+              "
+              class="evidence-image"
+              [ngStyle]="{
+                'background-image': 'url(' + (imageUri | imageUri) + ')'
+              }"
+            >
+              <div
+                class="remove-icon"
+                (click)="onRemoveEvidenceImages(imageUri)"
+              >
+                <i class="bi bi-x"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mt-4">
+        <div class="card-header">Transaction Detail</div>
+        <div class="py-3 px-3">
+          <div class="form-input-group">
+            <label class="form-label">Transcation Date</label>
+            <input
+              type="date"
+              formControlName="transcationDate"
+              placeholder="Transcation Date"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid': formService.isControlInvalid(
+                  reportForm,
+                  'transcationDate'
+                )
+              }"
+            />
+            <small
+              *ngIf="
+                formService.controlHasRequiredError(
+                  reportForm,
+                  'transcationDate'
+                )
+              "
+              class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+            >
+              Required
+            </small>
+          </div>
+
+          <div class="form-input-group">
+            <label class="form-label">Payment channel</label>
+            <div class="chip-container">
+              <div
+                class="chip"
+                *ngFor="let channel of paymentChannelOption"
+                (click)="onSelectPaymentChannel(channel)"
+                [ngClass]="{
+                  active:
+                    formService.getControl(reportForm, 'paymentChannel')
+                      ?.value === channel
+                }"
+              >
+                {{ channel }}
+              </div>
+            </div>
+            <small
+              *ngIf="
+                formService.controlHasRequiredError(
+                  reportForm,
+                  'paymentChannel'
+                )
+              "
+              class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+            >
+              Required
+            </small>
+          </div>
+
+          <div
+            *ngIf="
+              !!formService.getControl(reportForm, 'paymentChannel')?.value
+            "
+            [ngSwitch]="
+              formService.getControl(reportForm, 'paymentChannel')?.value
+            "
+          >
+            <ng-container *ngSwitchCase="'Bank Transfer'">
+              <app-bank-transfer-form
+                (formGroupChange)="onPaymentDetailFormChange($event)"
+              />
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'Credit Card'">
+              <app-credit-card-form
+                (formGroupChange)="onPaymentDetailFormChange($event)"
+              />
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'Electronic Payment'">
+              <app-electronic-payment-form
+                (formGroupChange)="onPaymentDetailFormChange($event)"
+              />
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'Cryptocurrency'">
+              <app-cryptocurrency-form
+                (formGroupChange)="onPaymentDetailFormChange($event)"
+              />
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'Others'">
+              <app-others-payment-form
+                (formGroupChange)="onPaymentDetailFormChange($event)"
+              />
+            </ng-container>
+          </div>
+
+          <div class="form-input-group">
+            <label class="form-label">Amount of money</label>
+            <div class="d-flex w-100">
+              <div class="w-75">
+                <input
+                  type="number"
+                  formControlName="amountOfMoney"
+                  placeholder="Amount of money"
+                  class="form-control"
+                  [ngClass]="{
+                    'is-invalid': formService.isControlInvalid(
+                      reportForm,
+                      'amountOfMoney'
+                    )
+                  }"
+                />
+                <small
+                  *ngIf="
+                    formService.controlHasRequiredError(
+                      reportForm,
+                      'amountOfMoney'
+                    )
+                  "
+                  class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+                >
+                  Required
+                </small>
+              </div>
+              <div class="w-25">
+                <select
+                  formControlName="currency"
+                  class="custom-select"
+                  [style.border-color]="
+                    formService.isControlInvalid(reportForm, 'currency')
+                      ? '#f23c49'
+                      : '#d5d2dc'
+                  "
+                >
+                  <option selected value="">Enter currency name...</option>
+                  <option
+                    *ngFor="let currency of currencyOptions"
+                    [value]="currency"
+                  >
+                    {{ currency }}
+                  </option>
+                </select>
+                <small
+                  *ngIf="
+                    formService.controlHasRequiredError(reportForm, 'currency')
+                  "
+                  class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+                >
+                  Required
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="card mt-4">
+        <div class="card-header">Reporter Information</div>
+        <div class="py-3 px-3">
+          <p>
+            You can anonymously report to our platform at this time. You can
+            comeback to get your reward within 30 days
+          </p>
+        </div>
+      </div> -->
+
+      <div class="mt-4 text-end">
+        <button
+          class="btn btn-lg btn-primary w-sm-auto w-100 mt-2"
+          type="submit"
+          [disabled]="submitting || uploading"
+        >
+          Submit your report
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

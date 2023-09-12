@@ -1,0 +1,42 @@
+<section class="page-wrapper">
+  <div *ngIf="error; else app_allow" class="full-center-container">
+    <app-error />
+  </div>
+
+  <ng-template #app_allow>
+    <div class="container">
+      <div class="row py-3">
+        <div class="col-12 text-center page-padding-top">
+          <h1>Become an inspector</h1>
+          <p class="description">
+            You can stake 50 JUTC as an insurance to become an inspector,
+            <br />
+            click zap button to faucet and stake in just one transaction. (<a
+              href="#"
+              >read more</a
+            >) {{ isInspector }}
+          </p>
+        </div>
+        <div *ngIf="fetching" class="text-center">
+          <app-spinner />
+        </div>
+
+        <div *ngIf="!fetching" class="row">
+          <div *ngIf="isInspector" class="col-12 text-center mt-2">
+            <div class="text-success">
+              Congratulations, You are inspector now.
+            </div>
+            <button (click)="unstake()" class="mt-3 btn btn-outline-primary">
+              Unstake
+            </button>
+          </div>
+
+          <div *ngIf="!isInspector" class="col-12 text-center mt-2">
+            <div>You are not inspector.</div>
+            <button (click)="zap()" class="mt-3 btn btn-primary">ZAP</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</section>

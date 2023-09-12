@@ -1,0 +1,77 @@
+<section class="page-wrapper">
+  <div class="container">
+    <div class="full-center-container" *ngIf="error; else app_allow">
+      <app-error />
+    </div>
+
+    <ng-template #app_allow>
+      <div class="full-center-container" *ngIf="fetching; else content">
+        <app-spinner />
+      </div>
+
+      <ng-template #content>
+        <div class="row py-3">
+          <div class="col-1"></div>
+          <div class="col-2 page-padding-top">
+            <h3>Filters</h3>
+            <div
+              class="chip mb-2"
+              *ngFor="let filter of user.interestingScamType"
+              [class.active]="isActiveFiltere(filter)"
+              (click)="onSelectFilter(filter)"
+            >
+              {{ filter }}
+            </div>
+          </div>
+          <div class="col page-padding-top">
+            <div
+              class="full-center-container"
+              *ngIf="filterLoading; else report_content"
+            >
+              <app-spinner />
+            </div>
+
+            <ng-template #report_content>
+              <div
+                class="pt-5"
+                *ngIf="!reportResults.length; else list_content"
+              >
+                <app-empty />
+              </div>
+
+              <ng-template #list_content>
+                <div class="main-content">
+                  <app-report-card
+                    *ngFor="let report of reportResults"
+                    [report]="report"
+                  />
+
+                  <div
+                    class="d-flex justify-content-center mt-3"
+                    *ngIf="loadingMore"
+                  >
+                    <app-spinner />
+                  </div>
+
+                  <div
+                    class="d-flex justify-content-center mt-3"
+                    *ngIf="showLoadMoreButton"
+                  >
+                    <button
+                      class="btn btn-sm btn-primary w-sm-auto"
+                      [disabled]="loadingMore"
+                      (click)="loadMoreReport()"
+                    >
+                      Load more
+                    </button>
+                  </div>
+                </div>
+              </ng-template>
+            </ng-template>
+          </div>
+          <div class="col-2"></div>
+        </div>
+      </ng-template>
+    </ng-template>
+  </div>
+</section>

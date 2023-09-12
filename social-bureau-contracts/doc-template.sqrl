@@ -1,0 +1,189 @@
+{{@if (it.name)}}# Contract {{it.name}}{{/if}}
+
+
+{{@if (it.author)}}*{{it.author}}*{{/if}}
+
+
+{{@if (it.title)}}> {{it.title}}{{/if}}
+
+
+{{@if (it.notice)}}{{it.notice}}{{/if}}
+
+
+{{@if (it.details)}}*{{it.details}}*{{/if}}
+
+
+<br />
+
+---
+
+<br />
+
+{{@if (Object.keys(it.methods).length > 0)}}
+[**Functions**](#functions)
+{{/if}}
+
+{{@if (Object.keys(it.events).length > 0)}}
+[**Events**](#events)
+{{/if}}
+
+{{@if (Object.keys(it.errors).length > 0)}}
+[**Errors**](#errors)
+{{/if}}
+
+<br />
+
+---
+
+<br />
+
+{{@if (Object.keys(it.methods).length > 0)}}
+## Functions
+
+{{@foreach(it.methods) => key, val}}
+1. [{{key}}](#function-{{key.toLowerCase().replace(/[(),\]\[]/g,"")}}) <br />
+{{/foreach}}
+
+{{@foreach(it.methods) => key, val}}
+<br />
+
+---
+
+<br />
+
+### Function {{key}}
+
+
+```solidity
+{{val.code}}
+
+```
+
+{{@if (val.notice)}}{{val.notice}}{{/if}}
+
+
+{{@if (val.details)}}*{{val.details}}*{{/if}}
+
+
+{{@if (Object.keys(val.inputs).length > 0)}}
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+{{@foreach(val.inputs) => key, val}}
+| {{key}} | {{val.type}} | {{val.description}} |
+{{/foreach}}
+{{/if}}
+
+{{@if (Object.keys(val.outputs).length > 0)}}
+#### Returns
+
+| Name | Type | Description |
+|---|---|---|
+{{@foreach(val.outputs) => key, val}}
+| {{key}} | {{val.type}} | {{val.description}} |
+{{/foreach}}
+
+{{/if}}
+{{/foreach}}
+
+{{/if}}
+
+
+{{@if (Object.keys(it.events).length > 0)}}
+
+<br />
+
+---
+
+<br />
+
+## Events
+
+{{@foreach(it.events) => key, val}}
+1. [{{key}}](#event-{{key.toLowerCase()}}) <br />
+{{/foreach}}
+
+{{@foreach(it.events) => key, val}}
+<br />
+
+---
+
+<br />
+
+### Event {{key}}
+
+
+```solidity
+{{val.code}}
+
+```
+
+{{@if (val.notice)}}{{val.notice}}{{/if}}
+
+
+{{@if (val.details)}}*{{val.details}}*{{/if}}
+
+
+{{@if (Object.keys(val.inputs).length > 0)}}
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+{{@foreach(val.inputs) => key, val}}
+| {{key}} {{@if (val.indexed)}}`indexed`{{/if}} | {{val.type}} | {{val.description}} |
+{{/foreach}}
+{{/if}}
+
+{{/foreach}}
+
+{{/if}}
+
+{{@if (Object.keys(it.errors).length > 0)}}
+
+<br />
+
+---
+
+<br />
+
+## Errors
+
+{{@foreach(it.errors) => key, val}}
+1. [{{key}}](#error-{{key.toLowerCase()}}) <br />
+{{/foreach}}
+
+{{@foreach(it.errors) => key, val}}
+<br />
+
+---
+
+<br />
+
+### Error {{key}} 
+
+
+```solidity
+{{val.code}}
+
+```
+
+{{@if (val.notice)}}{{val.notice}}{{/if}}
+
+
+{{@if (val.details)}}*{{val.details}}*{{/if}}
+
+
+{{@if (Object.keys(val.inputs).length > 0)}}
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+{{@foreach(val.inputs) => key, val}}
+| {{key}} | {{val.type}} | {{val.description}} |
+{{/foreach}}
+{{/if}}
+
+{{/foreach}}
+
+{{/if}}

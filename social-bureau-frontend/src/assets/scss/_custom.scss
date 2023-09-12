@@ -1,0 +1,348 @@
+@charset "UTF-8";
+/*
+ * Finder | Directory & Listings Bootstrap Template
+ * Copyright 2022 Createx Studio
+ * Theme styles
+ */
+
+@import '~dropzone/dist/min/dropzone.min.css';
+
+// Lightbox
+@import '~ngx-lightbox/lightbox.css';
+
+.dropzone_sec {
+  border: $border-width dashed $gray-400 !important;
+}
+
+.dropzone {
+  .dz-message {
+    font-size: 14px;
+    min-height: 150px !important;
+    border: none !important;
+    background: transparent !important;
+    color: #4f4f4f !important;
+    margin: 0 !important;
+  }
+}
+
+/* Accordion */
+.border-accordion {
+  .card {
+    border-width: 0;
+    border-bottom: 1px solid $gray-300 !important;
+    border-radius: 0;
+    margin-bottom: 16px;
+
+    .card-header {
+      padding: 0;
+      border-width: 0;
+
+      .btn.collapsed {
+        margin-bottom: 15px;
+      }
+
+      .btn {
+        text-align: left;
+        padding: 0;
+        width: 100%;
+      }
+    }
+
+    .card-body {
+      padding: 0 0 16px;
+    }
+  }
+
+  .accordion {
+    .accordion-item {
+      background-color: transparent;
+      border-color: transparent;
+      border-bottom-color: rgba(239, 236, 243, 1);
+      border-radius: 0;
+
+      .accordion-button {
+        .nav-link {
+          color: rgba($black, 0.65);
+          transition: all 0.5s ease;
+
+          &:hover {
+            color: $black;
+          }
+        }
+      }
+    }
+  }
+  &:last-child {
+    .accordion-item {
+      border: none;
+    }
+  }
+}
+
+.dropdown-toggle {
+  .arrow-none {
+    &::after {
+      content: '';
+    }
+  }
+}
+
+.accordion-button {
+  display: inherit;
+}
+
+/* Reviews Rating */
+.stars {
+  font-size: 25px;
+  color: $warning;
+}
+.sr-only {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.vertical-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(#09080d, 0.6);
+  z-index: 1030;
+  display: none;
+  &.show {
+    display: block;
+  }
+}
+
+// .swiper-wrapper {
+//   padding-bottom: 45px;
+// }
+
+.swiper-pagination {
+  .swiper-pagination-bullet {
+    width: 1rem;
+    height: 0.375rem;
+    margin: 0 0.3rem;
+    border-radius: 5px;
+    padding: 0px;
+    transition: all 0.5s ease;
+  }
+  .swiper-pagination-bullet-active {
+    width: 2rem;
+    background-color: $gray-700;
+  }
+}
+
+swiper {
+  > .swiper {
+    &.s-wrapper {
+      .swiper-pagination {
+        .swiper-pagination-handle {
+          margin: 0px !important;
+          padding: 3px !important;
+        }
+      }
+    }
+  }
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  width: 2.25rem !important;
+  height: 2.25rem !important;
+  background-color: $white;
+  box-shadow: 0 0.125rem 0.125rem -0.125rem rgb(31 27 45 / 8%), 0 0.25rem 0.75rem rgb(31 27 45 / 8%);
+  border-radius: 50%;
+  &::after {
+    font-family: 'finder-icons' !important;
+    color: $gray-800;
+    font-size: 0.75rem !important;
+  }
+}
+.swiper-button-prev {
+  &::after {
+    content: '\e951' !important;
+  }
+}
+
+.swiper-button-next {
+  &::after {
+    content: '\e952' !important;
+  }
+}
+
+.card {
+  .swiper-button-next,
+  .swiper-button-prev {
+    opacity: 0;
+    background-color: transparent;
+    box-shadow: none;
+    &::after {
+      color: $white;
+    }
+  }
+  &:hover {
+    .swiper-button-next,
+    .swiper-button-prev {
+      opacity: 1;
+    }
+  }
+}
+
+.dropdown-menu {
+  &.dropdown-menu-end {
+    left: auto !important;
+    right: 0px;
+  }
+}
+
+.simplebar-track {
+  &.simplebar-horizontal {
+    left: 0;
+    height: 4px !important;
+  }
+}
+
+.simplebar-track {
+  &.simplebar-horizontal {
+    .simplebar-scrollbar {
+      height: 4px !important;
+      top: 1px !important;
+    }
+  }
+}
+
+/* range slider  */
+.ngx-slider-limit {
+  &.ngx-slider-floor {
+    display: none !important;
+  }
+}
+
+.ngx-slider-limit {
+  &.ngx-slider-ceil {
+    display: none !important;
+  }
+}
+
+/* simplebar-scroll-show */
+.simplebar-scroll-show {
+  .simplebar-scrollbar {
+    left: -1px;
+    &::before {
+      opacity: 1 !important;
+      background-color: $gray-400;
+      width: 4px;
+    }
+  }
+}
+
+.simplebar-track.simplebar-vertical {
+  background: rgba(#09080d, 0.04);
+  z-index: -1;
+  width: 5px !important;
+}
+
+/* Custom Css */
+.ngx-slider {
+  .ngx-slider-pointer {
+    top: 50% !important;
+    width: 1.125rem !important;
+    height: 1.125rem !important;
+    margin-top: -0.511875rem !important;
+    border: 0 !important;
+    border-radius: 50% !important;
+    background-color: $primary !important;
+    box-shadow: none !important;
+  }
+}
+
+.ngx-slider {
+  .ngx-slider-pointer {
+    &::after {
+      position: absolute !important;
+      left: 50% !important;
+      top: 50% !important;
+      width: 0.6435rem !important;
+      height: 0.6435rem !important;
+      margin-top: -0.32175rem !important;
+      margin-left: -0.32175rem !important;
+      border-radius: 50% !important;
+      background-color: $white !important;
+      content: '' !important;
+    }
+  }
+  .ngx-slider-selection {
+    background-color: $primary !important;
+  }
+}
+
+.ngx-slider {
+  .ngx-slider-bubble {
+    padding: 0.25rem 0.5rem !important;
+    border: 1px solid $gray-300;
+    border-radius: 50rem;
+    background-color: $white;
+    color: $gray-800 !important;
+    font-size: 0.75rem !important;
+    line-height: 1.2;
+    box-shadow: $box-shadow-sm;
+  }
+  &.animate {
+    .ngx-slider-bubble {
+      &.ngx-slider-limit {
+        display: none;
+      }
+    }
+  }
+}
+
+.arrow-none {
+  &::after {
+    display: none;
+  }
+}
+
+.pagination-hide {
+  margin-bottom: 0px;
+  .swiper-wrapper {
+    padding-bottom: 0px;
+  }
+  .swiper-pagination {
+    display: none;
+  }
+  @media (max-width: 991.98px) {
+    margin-bottom: 20px;
+    .swiper-pagination {
+      display: block;
+    }
+    .swiper-wrapper {
+      padding-bottom: 45px;
+    }
+  }
+}
+
+.form-check {
+  .form-check-label {
+    cursor: pointer;
+  }
+}
+
+.form-select,
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.swiper-container {
+  overflow: hidden;
+}
+swiper {
+  height: 100%;
+}

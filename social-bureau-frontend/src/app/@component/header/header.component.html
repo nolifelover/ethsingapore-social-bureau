@@ -1,0 +1,53 @@
+<header
+  class="navbar navbar-expand-lg navbar-light bg-dark fixed-top"
+  data-scroll-header
+  (window:scroll)="windowScroll()"
+>
+  <div class="container">
+    <a class="navbar-brand me-3 me-xl-4" routerLink="">
+      <img
+        class="d-block"
+        src="assets/img/logo/sb-logo-white.svg"
+        width="116"
+        alt="StarterKit"
+      />
+    </a>
+    <button
+      class="navbar-toggler ms-auto"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      (click)="toggleMobileMenu()"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <app-connected-network class="order-lg-3 d-none d-sm-inline-block" />
+    <app-connect-wallet-button class="order-lg-4" />
+
+    <div class="collapse navbar-collapse order-lg-2" id="navbarNav">
+      <ul class="navbar-nav navbar-nav-scroll" style="max-height: 35rem">
+        <ng-container *ngFor="let item of menuItems">
+          <li
+            class="nav-item dropdown"
+            *ngIf="!item.auth || !!authService.getTokens()?.accessToken"
+          >
+            <a
+              class="nav-link text-light"
+              (click)="onMenuClick($event)"
+              href="javascript: void(0);"
+              id="topnav-components"
+              routerLink="{{ item.link }}"
+              role="button"
+            >
+              {{ item.label }}
+            </a>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,33 @@
+<ul class="navbar-nav navbar-nav-scroll" style="max-height: 35rem">
+  <li class="nav-item dropdown">
+    <a
+      class="nav-link dropdown-toggle {{
+        isSupportNetwork ? '' : 'text-danger'
+      }}"
+      (click)="onMenuClick($event)"
+      href="javascript:void(0);"
+      id="topnav-chain"
+      role="button"
+    >
+      <i *ngIf="!isSupportNetwork" class="fi-alert-circle text-danger"></i
+      >&nbsp;
+      <span [class]="isSupportNetwork ? 'text-primary' : 'text-danger'">{{
+        isSupportNetwork ? chainName : "Wrong Network"
+      }}</span>
+    </a>
+    <ul
+      class="dropdown-menu"
+      aria-labelledby="topnav-chain"
+      id="chains-dropdown"
+    >
+      <ng-template ngFor let-chain [ngForOf]="supportChains">
+        <a
+          class="col dropdown-item side-nav-link-ref"
+          href="javascript:void(0);"
+          (click)="switchChain(chain)"
+          >{{ chain.chainName }}</a
+        >
+      </ng-template>
+    </ul>
+  </li>
+</ul>

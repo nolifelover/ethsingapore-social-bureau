@@ -1,0 +1,181 @@
+<section class="page-wrapper">
+  <div class="container">
+    <div class="full-center-container" *ngIf="error; else app_allow">
+      <app-error />
+    </div>
+
+    <ng-template #app_allow>
+      <div class="full-center-container" *ngIf="fetching; else content">
+        <app-spinner />
+      </div>
+
+      <ng-template #content>
+        <div class="page-padding-top page-padding-bottom">
+          <h3>Profile</h3>
+          <div class="card">
+            <div class="card-body">
+              <form [formGroup]="profileForm" (ngSubmit)="handleSubmit()">
+                <div class="form-input-group">
+                  <label class="form-label">Profile image</label>
+
+                  <input
+                    class="form-control"
+                    type="file"
+                    accept="image/png, image/jpeg"
+                    (change)="onInputImages($event)"
+                    #imageInput
+                  />
+                </div>
+
+                <div
+                  class="evidence-container mb-3"
+                  *ngIf="
+                    !!formService.getControl(profileForm, 'profileImage')?.value
+                  "
+                >
+                  <div
+                    class="evidence-image"
+                    [ngStyle]="{
+                      'background-image':
+                        'url(' +
+                        (formService.getControl(profileForm, 'profileImage')
+                          ?.value | imageUri) +
+                        ')'
+                    }"
+                  >
+                    <div
+                      class="remove-icon"
+                      (click)="
+                        onRemoveImages(
+                          formService.getControl(profileForm, 'profileImage')
+                            ?.value
+                        )
+                      "
+                    >
+                      <i class="bi bi-x"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-input-group">
+                  <label class="form-label">Firstname</label>
+                  <input
+                    formControlName="firstname"
+                    placeholder="Firstname"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': formService.isControlInvalid(
+                        profileForm,
+                        'firstname'
+                      )
+                    }"
+                  />
+                  <small
+                    *ngIf="
+                      formService.controlHasRequiredError(
+                        profileForm,
+                        'firstname'
+                      )
+                    "
+                    class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+                  >
+                    Required
+                  </small>
+                </div>
+                <div class="form-input-group">
+                  <label class="form-label">Lastname</label>
+                  <input
+                    formControlName="lastname"
+                    placeholder="Lastname"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': formService.isControlInvalid(
+                        profileForm,
+                        'lastname'
+                      )
+                    }"
+                  />
+                  <small
+                    *ngIf="
+                      formService.controlHasRequiredError(
+                        profileForm,
+                        'lastname'
+                      )
+                    "
+                    class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+                  >
+                    Required
+                  </small>
+                </div>
+                <div class="form-input-group">
+                  <label class="form-label">Telephone number</label>
+                  <input
+                    formControlName="mobilePhone"
+                    placeholder="Telephone number"
+                    class="form-control"
+                    [inputMask]="mobilePhoneMask"
+                    [ngClass]="{
+                      'is-invalid': formService.isControlInvalid(
+                        profileForm,
+                        'mobilePhone'
+                      )
+                    }"
+                  />
+                  <small
+                    *ngIf="formService.getControl(profileForm, 'mobilePhone')?.errors?.['inputMask']"
+                    class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+                  >
+                    The telephone number format is incorrect.
+                  </small>
+                </div>
+                <div class="form-input-group">
+                  <label class="form-label">E-mail</label>
+                  <input
+                    formControlName="email"
+                    placeholder="E-mail"
+                    class="form-control"
+                  />
+                </div>
+
+                <div class="form-input-group">
+                  <label class="form-label">Interests scam type</label>
+                  <div class="chip-container">
+                    <div
+                      class="chip"
+                      *ngFor="let type of scamTypeOptions"
+                      (click)="onSelectScamType(type)"
+                      [class.active]="isActiveScamType(type)"
+                    >
+                      {{ type }}
+                    </div>
+                  </div>
+                  <small
+                    *ngIf="
+                      formService.controlHasRequiredError(
+                        profileForm,
+                        'interestingScamType'
+                      )
+                    "
+                    class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+                  >
+                    Required to specify at least 1 item.
+                  </small>
+                </div>
+
+                <div class="mt-4 text-end">
+                  <button
+                    class="btn btn-lg btn-primary w-sm-auto w-100 mt-2"
+                    type="submit"
+                    [disabled]="submitting || uploading"
+                  >
+                    Submit your profile
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ng-template>
+  </div>
+</section>

@@ -1,0 +1,92 @@
+<div [formGroup]="form">
+  <div class="form-input-group">
+    <label class="form-label">Credit card network</label>
+    <div class="chip-container">
+      <div
+        class="chip"
+        *ngFor="let network of creditCardNetworkOptions"
+        (click)="onSelectCreditCardNetwork(network)"
+        [ngClass]="{
+          active: formService.getControl(form, 'network')?.value === network
+        }"
+      >
+        {{ network }}
+      </div>
+    </div>
+    <small
+      *ngIf="formService.controlHasRequiredError(form, 'network')"
+      class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+    >
+      Required
+    </small>
+  </div>
+
+  <div
+    class="form-input-group"
+    *ngIf="formService.getControl(form, 'network')?.value === 'Others'"
+  >
+    <label class="form-label">Enter credit card network</label>
+    <input
+      formControlName="otherNetwork"
+      placeholder="Enter credit card network"
+      class="form-control"
+      [ngClass]="{
+        'is-invalid': formService.isControlInvalid(form, 'otherNetwork')
+      }"
+    />
+    <small
+      *ngIf="formService.controlHasRequiredError(form, 'otherNetwork')"
+      class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+    >
+      Required
+    </small>
+  </div>
+
+  <div class="form-input-group">
+    <label class="form-label">Credit Card Issuers</label>
+
+    <select
+      formControlName="issuers"
+      class="custom-select"
+      [style.border-color]="
+        formService.isControlInvalid(form, 'issuers') ? '#f23c49' : '#d5d2dc'
+      "
+    >
+      <option selected value="">Enter bank name...</option>
+      <option *ngFor="let bank of thaiBankOptions" [value]="bank">
+        {{ bank }}
+      </option>
+    </select>
+    <small
+      *ngIf="formService.controlHasRequiredError(form, 'issuers')"
+      class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+    >
+      Required
+    </small>
+  </div>
+
+  <div class="form-input-group">
+    <label class="form-label">Credit card number</label>
+    <input
+      formControlName="number"
+      placeholder="Telephone number"
+      class="form-control"
+      [inputMask]="creditCardNoMask"
+      [ngClass]="{
+        'is-invalid': formService.isControlInvalid(form, 'number')
+      }"
+    />
+    <small
+      *ngIf="formService.controlHasRequiredError(form, 'number')"
+      class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+    >
+      Required
+    </small>
+    <small
+      *ngIf="formService.getControl(form, 'number')?.errors?.['inputMask']"
+      class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+    >
+      The credit card number format is incorrect.
+    </small>
+  </div>
+</div>

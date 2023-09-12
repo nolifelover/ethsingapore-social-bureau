@@ -1,0 +1,104 @@
+<section class="page-wrapper">
+  <div class="full-center-container" *ngIf="error; else app_allow">
+    <app-error />
+  </div>
+
+  <ng-template #app_allow>
+    <div class="page-title bg-dark">
+      <div class="text-center">
+        <h2 class="text-light">Check scammers before transferring money</h2>
+        <p class="text-light">
+          Find and investigate fraudsters from everywhere
+        </p>
+      </div>
+    </div>
+    <div class="input-box-container">
+      <div class="input-box">
+        <div class="card">
+          <div class="card-body">
+            <form [formGroup]="form" (ngSubmit)="handleSubmit()">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <div
+                    class="d-inline-block"
+                    ngbDropdown
+                    #cateDrop="ngbDropdown"
+                  >
+                    <button
+                      type="button"
+                      class="btn btn-outline-primary input-group-category"
+                      id="dropdownManual"
+                      ngbDropdownAnchor
+                      (focus)="cateDrop.open()"
+                    >
+                      {{ selectedCategory.label }}
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownManual">
+                      <button
+                        *ngFor="let cate of categoryOptions"
+                        ngbDropdownItem
+                        type="button"
+                        (click)="onSelectCategory(cate)"
+                      >
+                        {{ cate.label }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  formControlName="keyword"
+                  placeholder="Enter a search keyword"
+                />
+                <div class="input-group-append">
+                  <button
+                    class="btn btn-primary input-group-button"
+                    type="submit"
+                  >
+                    Search
+                  </button>
+                </div>
+              </div>
+            </form>
+            <p>Enter bank account number such as 0999999990</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-container *ngIf="!!crimeReport">
+      <div *ngIf="!crimeReport.results.length; else report_results">
+        <div class="result-container mt-5">
+          <h2>Report not found</h2>
+          <p>
+            You can try to search with a different method, or you can create a
+            new report by clicking button below.
+          </p>
+          <button
+            class="btn btn-primary w-sm-auto w-100 mt-2"
+            (click)="createNewReport()"
+          >
+            Create a new report
+          </button>
+        </div>
+      </div>
+
+      <ng-template #report_results>
+        <div class="row py-3">
+          <div class="col-3"></div>
+          <div class="col">
+            <h3 class="text-center">
+              Found
+              <span class="highlight-text mx-1">{{
+                crimeReport.totalResults
+              }}</span>
+              report(s) related to "{{ form.value.keyword }}"
+            </h3>
+          </div>
+          <div class="col-3"></div>
+        </div>
+      </ng-template>
+    </ng-container>
+  </ng-template>
+</section>

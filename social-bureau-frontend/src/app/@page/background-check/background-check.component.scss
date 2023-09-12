@@ -1,0 +1,63 @@
+@import "src/assets/scss/_variables.scss";
+
+.page-title {
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 60px;
+
+  h2 {
+    line-height: 0.5;
+  }
+}
+
+.input-box-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -50px;
+}
+
+.input-box {
+  width: 70%;
+  max-width: 900px;
+  height: 200px;
+
+  .input-group-category {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    height: 52px;
+    width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+    text-overflow: ellipsis;
+    padding-left: 15px;
+  }
+
+  .input-group-category:after {
+    content: none;
+  }
+
+  .input-group-button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    height: 52px;
+  }
+}
+
+.result-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h2 {
+    margin: 2px;
+  }
+}
+
+.highlight-text {
+  color: $primary;
+}

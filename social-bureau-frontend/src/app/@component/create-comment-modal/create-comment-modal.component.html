@@ -1,0 +1,113 @@
+<div class="modal-header">
+  <h4 class="modal-title">Comment</h4>
+  <button
+    type="button"
+    class="btn-close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  ></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="commentForm">
+    <div class="form-input-group">
+      <div class="row">
+        <div class="col-6 d-flex justify-content-end">
+          <div
+            class="vote-button"
+            (click)="onSelectVote('UPVOTE')"
+            [class.active]="
+              formService.getControl(commentForm, 'vote')?.value === 'UPVOTE'
+            "
+          >
+            <i class="bi bi-arrow-up"></i>
+          </div>
+        </div>
+        <div class="col-6 d-flex">
+          <div
+            class="vote-button"
+            (click)="onSelectVote('DOWNVOTE')"
+            [class.active]="
+              formService.getControl(commentForm, 'vote')?.value === 'DOWNVOTE'
+            "
+          >
+            <i class="bi bi-arrow-down"></i>
+          </div>
+        </div>
+      </div>
+      <small
+        *ngIf="formService.controlHasRequiredError(commentForm, 'vote')"
+        class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+      >
+        Required
+      </small>
+    </div>
+
+    <div class="form-input-group">
+      <label class="form-label">Description</label>
+      <textarea
+        class="form-control"
+        rows="4"
+        placeholder="Description"
+        formControlName="description"
+        [ngClass]="{
+          'is-invalid': formService.isControlInvalid(commentForm, 'description')
+        }"
+      ></textarea>
+      <small
+        *ngIf="formService.controlHasRequiredError(commentForm, 'description')"
+        class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+      >
+        Required
+      </small>
+    </div>
+
+    <div class="form-input-group">
+      <label class="form-label">Evidences</label>
+      <input
+        class="form-control"
+        type="file"
+        multiple
+        accept="image/png, image/jpeg"
+        (change)="onInputEvidenceImages($event)"
+        #evidenceInput
+      />
+    </div>
+
+    <div
+      class="evidence-container"
+      *ngIf="!!formService.getControl(commentForm, 'evidences')?.value.length"
+    >
+      <div
+        *ngFor="
+          let imageUri of formService.getControl(commentForm, 'evidences')
+            ?.value
+        "
+        class="evidence-image"
+        [ngStyle]="{
+          'background-image': 'url(' + (imageUri | imageUri) + ')'
+        }"
+      >
+        <div class="remove-icon" (click)="onRemoveEvidenceImages(imageUri)">
+          <i class="bi bi-x"></i>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-outline-dark"
+    (click)="activeModal.close('Close click')"
+  >
+    Close
+  </button>
+  <button
+    type="button"
+    class="btn btn-primary"
+    (click)="handleSubmit()"
+    [disabled]="uploading || submitting"
+  >
+    Confirm
+  </button>
+</div>

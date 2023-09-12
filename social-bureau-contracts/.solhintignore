@@ -1,0 +1,12 @@
+# folders
+.yarn/
+build/
+dist/
+node_modules/
+contracts/core/*
+contracts/interfaces/*
+contracts/helpers/*
+contracts/mocks/*
+contracts/prototypes/*
+contracts/sample/*
+contracts/tokens/*

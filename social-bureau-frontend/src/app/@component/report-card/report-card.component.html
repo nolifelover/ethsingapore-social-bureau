@@ -1,0 +1,84 @@
+<div class="card">
+  <div class="card-header bg-transparent">
+    <div class="card-header-container" [routerLink]="'/crime/' + report.id">
+      <img
+        [src]="
+          !!report.createdBy.profileImage
+            ? (report.createdBy.profileImage | imageUri)
+            : defaultAvatar
+        "
+        class="card-img-top"
+        alt="..."
+      />
+      <div class="ps-2 pt-1">
+        <p>{{ report.createdBy.firstname }} {{ report.createdBy.lastname }}</p>
+
+        <small>{{ fromNow(report.createdAt._seconds) }}</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="row pointer" [routerLink]="'/crime/' + report.id">
+      <div class="col-8">
+        <h4 class="m-0">{{ report.title }}</h4>
+        <p>
+          {{ report.description }}
+        </p>
+      </div>
+      <div class="col-4 d-flex justify-content-center">
+        <div class="evidence-image-container">
+          <div
+            *ngIf="report.evidences.length"
+            class="evidence-image"
+            [ngStyle]="{
+              'background-image':
+                'url(' + (report.evidences[0] | imageUri) + ')'
+            }"
+          ></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tag-container d-flex align-items-center mt-4">
+      <div class="tag bg-dark text-white" *ngIf="!!report.scamType">
+        {{ report.scamType }}
+      </div>
+      <div class="tag bg-dark text-white">{{ report.category }}</div>
+      <div class="tag bg-dark text-white">{{ report.subcategory }}</div>
+      <div class="ms-3"><i class="bi bi-arrow-up"></i> {{ report.upvote }}</div>
+      <div class="mx-1 dot">•</div>
+      <div><i class="bi bi-arrow-down"></i> {{ report.downvote }}</div>
+      <div class="mx-1 dot">•</div>
+      <div><i class="bi bi-chat-right me-1"></i> {{ report.countComment }}</div>
+    </div>
+  </div>
+
+  <!-- <div class="card-footer bg-transparent">
+    <div class="action-container">
+      <div class="action-button" [routerLink]="'/crime/' + report.id">
+        <div class="arrow-button custom-arrow-button">
+          <i class="bi bi-arrow-up" [class.voted]="upOrDownVote === 'UP'"></i>
+        </div>
+        <span [class.voted]="upOrDownVote === 'UP'">{{ report.upvote }}</span>
+      </div>
+
+      <div class="action-button" [routerLink]="'/crime/' + report.id">
+        <div
+          class="arrow-button custom-arrow-button"
+          [class.voted]="upOrDownVote === 'DOWN'"
+        >
+          <i class="bi bi-arrow-down"></i>
+        </div>
+        <span [class.voted]="upOrDownVote === 'DOWN'">{{
+          report.downvote
+        }}</span>
+      </div>
+
+      <div class="comment-action-button" [routerLink]="'/crime/' + report.id">
+        <div class="arrow-button"><i class="bi bi-chat-right"></i></div>
+        <span>{{ report.countComment }}</span>
+      </div>
+    </div>
+  </div> -->
+</div>

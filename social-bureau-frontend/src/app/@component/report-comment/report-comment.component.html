@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-1 pe-0">
+    <img
+      [src]="
+        !!comment.createdBy.profileImage
+          ? (comment.createdBy.profileImage | imageUri)
+          : defaultAvatar
+      "
+      class="card-img-top"
+      alt="..."
+    />
+  </div>
+  <div class="col">
+    <div class="d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center">
+        <p class="m-0">
+          {{ comment.createdBy.firstname }} {{ comment.createdBy.lastname }}
+        </p>
+        <p class="m-0 mx-2">•</p>
+        <small>{{ fromNow(comment.createdAt._seconds) }}</small>
+      </div>
+
+      <div class="me-1 icon-container">
+        <i class="bi bi-arrow-up" *ngIf="comment.vote === 'UPVOTE'"></i>
+        <i class="bi bi-arrow-up" *ngIf="comment.vote === 'DOWNVOTE'"></i>
+      </div>
+    </div>
+
+    <div class="mt-2">
+      <small>
+        {{ comment.description }}
+      </small>
+
+      <div class="evidence-image-container mt-2">
+        <div
+          *ngFor="let imageUri of comment.evidences"
+          class="evidence-image"
+          [ngStyle]="{
+            'background-image': 'url(' + (imageUri | imageUri) + ')'
+          }"
+        ></div>
+      </div>
+    </div>
+
+    <!-- <div class="action-container mt-2">
+      <div class="action-button">
+        <div class="arrow-button arrow-button-sm">
+          <i class="bi bi-arrow-up"></i>
+        </div>
+        <span class="text-sm">18k</span>
+      </div>
+
+      <div class="action-button">
+        <div class="arrow-button arrow-button-sm">
+          <i class="bi bi-arrow-down"></i>
+        </div>
+        <span class="text-sm">1k</span>
+      </div>
+    </div> -->
+  </div>
+</div>

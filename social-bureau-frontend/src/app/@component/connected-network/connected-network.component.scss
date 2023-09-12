@@ -1,0 +1,6 @@
+@import "src/assets/scss/_variables.scss";
+
+.dropdown-toggle:not(.dropdown-toggle-split)::after {
+  color: $primary;
+  margin-top: 2px;
+}

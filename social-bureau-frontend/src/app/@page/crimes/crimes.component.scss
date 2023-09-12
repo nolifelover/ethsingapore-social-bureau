@@ -1,0 +1,36 @@
+.sidebar-col {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.side-bar {
+  height: 100%;
+  background-color: transparent;
+  padding-left: 50px;
+
+  a,
+  h5 {
+    padding: 6px 0px 6px 0px;
+    text-decoration: none;
+    display: block;
+    margin: 0;
+  }
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-bottom: 100px;
+}
+
+.chip {
+  padding: 5px 10px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.active {
+  background-color: #3f51b5;
+  color: #ffffff;
+}

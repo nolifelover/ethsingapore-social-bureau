@@ -1,0 +1,44 @@
+<div [formGroup]="form">
+  <div class="form-input-group">
+    <label class="form-label">Electronic Payment</label>
+    <div class="chip-container">
+      <div
+        class="chip"
+        *ngFor="let payment of electronicPaymentOptions"
+        (click)="onSelectElectronicPayment(payment)"
+        [ngClass]="{
+          active: formService.getControl(form, 'payment')?.value === payment
+        }"
+      >
+        {{ payment }}
+      </div>
+    </div>
+    <small
+      *ngIf="formService.controlHasRequiredError(form, 'payment')"
+      class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+    >
+      Required
+    </small>
+  </div>
+
+  <div
+    class="form-input-group"
+    *ngIf="formService.getControl(form, 'payment')?.value === 'Others'"
+  >
+    <label class="form-label">Electronic Payment</label>
+    <input
+      formControlName="other"
+      placeholder="Electronic Payment"
+      class="form-control"
+      [ngClass]="{
+        'is-invalid': formService.isControlInvalid(form, 'other')
+      }"
+    />
+    <small
+      *ngIf="formService.controlHasRequiredError(form, 'other')"
+      class="text-danger d-block w-100 px-3 pb-3 pt-1 text-end"
+    >
+      Required
+    </small>
+  </div>
+</div>

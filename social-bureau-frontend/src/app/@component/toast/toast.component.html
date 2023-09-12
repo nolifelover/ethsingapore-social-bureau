@@ -1,0 +1,12 @@
+<!-- warning, error,  info  -->
+<div *ngIf="toastModel.visible" class="toast-container" [@toastAnimation]>
+  <div class="toast-content" [ngClass]="toastModel.type">
+    <div class="toast-text">
+      <div class="title">{{ toastModel.title }}</div>
+      <div class="message">{{ toastModel.message }}</div>
+    </div>
+    <div *ngIf="dismissEnabled" class="dismiss" (click)="close()">
+      <span>x</span>
+    </div>
+  </div>
+</div>

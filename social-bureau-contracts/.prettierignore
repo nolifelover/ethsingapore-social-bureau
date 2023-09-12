@@ -1,0 +1,19 @@
+# folders
+artifacts/
+build/
+cache/
+coverage/
+dist/
+lib/
+node_modules/
+typechain/
+deployments/
+flatten/
+
+contracts/offchain-aggregator/
+
+# files
+coverage.json
+*.csv
+ADDRESS.md
+scripts/mm-users/mmvUser.json
